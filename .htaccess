@@ -1,0 +1,26 @@
+### MAIN DEFAULTS
+Options +ExecCGI -Indexes
+DirectoryIndex index.html index.htm index.php
+DefaultLanguage en-US
+AddDefaultCharset UTF-8
+ServerSignature Off
+
+### REWRITES AND REDIRECTS
+# REQUEST METHODS: GET,POST,PUT,DELETE,CONNECT,OPTIONS,PATCH,PROPFIND,
+#                  PROPPATCH,MKCOL,COPY,MOVE,LOCK,UNLOCK
+
+## REWRITE DEFAULTS
+#Options +FollowSymLinks
+RewriteEngine On
+#RewriteCond ${REQUEST_FILENAME} !-f
+#RewriteRule ^([^\.]+)$ $1.php [NC,L]
+#RewriteEngine On
+#RewriteCond %{SCRIPT_FILENAME} !-d
+#RewriteRule ^([^.]+)$ .php [NC,L]
+
+## PROTECT FILES
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
