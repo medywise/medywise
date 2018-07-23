@@ -1,0 +1,34 @@
+/*Username Characters*/
+#username-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#username-text-content:focus{outline: 0;}
+#username-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Password Characters*/
+#password-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#password-text-content:focus{outline: 0;}
+#password-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*First Name Characters*/
+#first-name-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#first-name-text-content:focus{outline: 0;}
+#first-name-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Last Name Characters*/
+#last-name-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#last-name-text-content:focus{outline: 0;}
+#last-name-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Email Characters*/
+#email-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#email-text-content:focus{outline: 0;}
+#email-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Name Characters*/
+#name-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#name-text-content:focus{outline: 0;}
+#name-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Description Characters*/
+#description-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#description-text-content:focus{outline: 0;}
+#description-character-count{color: #A0A0A0;padding: 15px 0px;}

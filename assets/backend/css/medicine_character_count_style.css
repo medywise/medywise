@@ -1,0 +1,74 @@
+/*Medicine Name Characters*/
+#med-name-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#med-name-text-content:focus{outline: 0;}
+#med-name-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Medicine Description Characters*/
+#med-description-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#med-description-text-content:focus{outline: 0;}
+#med-description-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*How To Store Characters*/
+#how-to-store-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#how-to-store-text-content:focus{outline: 0;}
+#how-to-store-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*How To Take Characters*/
+#how-to-take-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#how-to-take-text-content:focus{outline: 0;}
+#how-to-take-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Side Effects Characters*/
+#side-effects-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#side-effects-text-content:focus{outline: 0;}
+#side-effects-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Used For Characters*/
+#used-for-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#used-for-text-content:focus{outline: 0;}
+#used-for-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Short Name Characters*/
+#short-name-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#short-name-text-content:focus{outline: 0;}
+#short-name-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Ratings Characters*/
+#ratings-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#ratings-text-content:focus{outline: 0;}
+#ratings-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Company Name Characters*/
+#company-name-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#company-name-text-content:focus{outline: 0;}
+#company-name-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Price Characters*/
+#price-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#price-text-content:focus{outline: 0;}
+#price-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Tags Characters*/
+#tags-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#tags-text-content:focus{outline: 0;}
+#tags-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Type Characters*/
+#type-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#type-text-content:focus{outline: 0;}
+#type-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Also Called Characters*/
+#also-called-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#also-called-text-content:focus{outline: 0;}
+#also-called-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*Available As Characters*/
+#available-as-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#available-as-text-content:focus{outline: 0;}
+#available-as-character-count{color: #A0A0A0;padding: 15px 0px;}
+
+/*When To Take Characters*/
+#when-to-take-text-content{padding:10px; border:#F0F0F0 1px solid; border-radius:4px;background-color:#FFF;}
+#when-to-take-text-content:focus{outline: 0;}
+#when-to-take-character-count{color: #A0A0A0;padding: 15px 0px;}

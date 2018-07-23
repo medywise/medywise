@@ -1,0 +1,74 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Medicine Api",
+		"_postman_id": "a4a28ca1-537b-d7d0-5479-7472ac6106b3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search",
+			"request": {
+				"url": "http://dev-medical-web.pantheonsite.io/src/api/medicines/search.php",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "med_name",
+							"value": "The company",
+							"type": "text",
+							"description": ""
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Medicine By ID",
+			"request": {
+				"url": "http://dev-medical-web.pantheonsite.io/src/api/medicines/medicines.php",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "med_id",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Clicks",
+			"request": {
+				"url": "http://dev-medical-web.pantheonsite.io/src/api/medicines/clicks.php",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "med_id",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
