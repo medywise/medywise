@@ -6,21 +6,31 @@
     die;
 } ?>
 <?php
-    $message = "";
-    $name = "";
-    $description = "";
+    //$message = "";
     $company = new Companies();
-    $company->addNewCompany($name, $description);
+
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        
+        // if (empty($_FILES['file_upload'])) {
+        //     $company->save();
+        // } else {
+        $company->addNewCompany($name, $description);
+        // }
+    }
+
+    if (isset($_POST['sub'])) {
+        $company->importCompaniesViaFile($_FILES['file']['tmp_name']);
+    }
 ?>
 <div id="wrapper">
-    <!-- Navigation -->
     <?php includeAdminCommonFiles('topNavigation.php'); ?>
-    <!-- /.navbar-top-links -->
     <?php includeAdminCommonFiles('sideNavigation.php'); ?>
-    <!-- /.navbar-side-links -->
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
+                <p class="bg-success"><?php echo $message; ?></p>
                 <h3 class="page-header">Add New Company</h3>
             </div>
             <!-- Form Starts -->
@@ -29,7 +39,7 @@
                     <div class="col-lg-3">
                     </div>
                     <div class="col-lg-6">
-                        <p class="text-primary"><?php echo $message; ?></p>
+                        <p class="text-primary">
                         <form role="form" action="add.php" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Name</label>
@@ -46,7 +56,20 @@
                                 <input class="btn btn-outline btn-primary btn-xs" type="file" name="file_upload">
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary btn-lg btn-block">Add New Company</button>
-                        </form><!-- Form Ends -->
+                        </form>
+                    </div>
+                </div><!-- Form Ends -->
+                <br><hr>
+                <div class="row">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-6">
+                        <form action="add.php" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input class="btn btn-outline btn-primary btn-xs" type="file" name="file">
+                            </div>
+                            <button type="submit" name="sub" class="btn btn-primary btn-lg btn-block">Import via File</button>
+                        </form>
                     </div>
                 </div>
             </div><!-- /.col-lg-12 -->

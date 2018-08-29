@@ -1,25 +1,25 @@
 <?php
+    # To understand recursion, see the bottom of this file
+
     class Main
     {
-
-
     /********************************* Helper Methods *********************************/
 
         public function clean($string)
         {
             return htmlentities($string);
-        }
+        }// clean(); End
 
         public function redirect($location)
         {
             return header("Location: {$location}");
-        }
+        }// redirect(); End
 
         public function tokenGenerator()
         {
             $token = $_SESSION['token'] = md5(uniqid(mt_rand(), true));
             return $token;
-        }
+        }// tokenGenerator(); End
 
 
         /********************************* Methods Related To Display/Set/Show Errors or Messages *********************************/
@@ -31,7 +31,7 @@
             } else {
                 $message = "";
             }
-        }
+        }// setMessage(); End
 
         public function displayMessage()
         {
@@ -39,9 +39,8 @@
                 echo $_SESSION['message'];
                 unset($_SESSION['message']);
             }
-        }
+        }// displayMessage();
 
-        /*Validation Function Starts*/
         public function validationErrors($errorMessage)
         {
             $errorMessage = <<<DELIMITER
@@ -51,7 +50,7 @@
             </div>
 DELIMITER;
             return $errorMessage;
-        }
+        }// validationErrors(); End
 
 
         /********************************* Methods To Check If Username or Email Exists *********************************/
@@ -92,14 +91,14 @@ DELIMITER;
         //Can Be Used In Sending Registeration Or Password Link To The User or Admin
         public function sendMail($email = null, $subject = null, $msg = null, $header = null)
         {
-            $em = "info.medywise@gmail.com";
-            $pwd = "symptomstinking";
+            $em = Config::SMTP_GOOGLE_EMAIL;
+            $pwd = Config::SMTP_GOOGLE_PASSWORD;
 
             $mail = new PHPMailer\PHPMailer\PHPMailer();
 
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 587;
+            $mail->Host = Config::SMTP_GOOGLE_HOST;
+            $mail->Port = Config::SMTP_GOOGLE_PORT;
             $mail->SMTPSecure = 'tls';
             $mail->SMTPAuth = true;
             $mail->isHTML(true);
@@ -128,6 +127,25 @@ DELIMITER;
                 echo 'Message has been sent, Please check your Inbox or Spam folder.';
             }
         }//sendMail(); End.
+
+        public function sendContactEmail($to, $from, $fromName, $body)
+        {
+            $mail = new PHPMailer\PHPMailer\PHPMailer();
+
+            $mail->setFrom($from, $fromName);
+            $mail->addAddress($to);
+
+            $mail->Subject = 'Mail from Medywise Contact Us Page';
+            $mail->Body = $body;
+            $mail->isHTML(true);
+
+            if ($mail->send()) {
+                echo "<p class='bg-success text-center'>Message successfully sent</p>";
+            
+            } else {
+                echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+            }
+        }
 
         //Sends Email To Mailtrap Account
         public function sendEmail($email=null, $subject=null, $msg=null, $header=null)
@@ -159,8 +177,11 @@ DELIMITER;
         }//sendEmail(); End
 
 
-        /********************************* Methods To Count Number Of Enteries In A Table *********************************/
+        /********************************* Method To Count Number Of Enteries In A Table *********************************/
 
+        // This function doesn't do what you think it does. Turn back now.
+        // - NDW 2/8/2018
+        // Just joking
         public static function countAll()
         {
             global $database;
@@ -170,11 +191,12 @@ DELIMITER;
             $row = $database->fetchArray($resultSet);
             
             return $database->arrayShift($row);
-        }
+        }// countAll(); End
 
 
         /********************************* Core Databse Methods *********************************/
 
+        /* Please work */
         protected function tableProperties()
         {
             // return an array of attribute names and their values
@@ -187,8 +209,9 @@ DELIMITER;
             }
 
             return $properties;
-        }
-
+        }// tableProperties(); End
+        
+        // code below helps code above - any problems?
         protected function cleanProperties()
         {
             global $database;
@@ -202,7 +225,7 @@ DELIMITER;
             }
 
             return $cleanProperties;
-        }
+        }// cleanProperties(); End
 
 
         /********************************* CRUD Methods *********************************/
@@ -211,7 +234,7 @@ DELIMITER;
         {
             // A new record won't have an id yet.
             return isset($this->id) ? $this->update() : $this->create();
-        }
+        }// save(); End
 
         public function create()
         {
@@ -231,7 +254,7 @@ DELIMITER;
             } else {
                 return false;
             }
-        }
+        }// create(); End
 
         public function update()
         {
@@ -254,7 +277,7 @@ DELIMITER;
             $database->query($sql);
 
             return (mysqli_affected_rows($database->connection) == 1) ? true : false;
-        }
+        }// update(); End
 
         public function delete()
         {
@@ -275,5 +298,8 @@ DELIMITER;
             // Example:  echo $user->first_name . " was deleted";
             // but, we can't call $user->update()
             // after calling $user->delete().
-        }
-    }
+        }//delete(); End
+
+    }//End of Class
+
+    # To understand recursion, see the top of this file

@@ -25,6 +25,9 @@
             return !empty($resultArray) ? array_shift($resultArray) : false;
         }
 
+        // no comments for you
+        // it was hard to write
+        // so it should be hard to read
         public static function findSubscriptionByQuery($sql)
         {
             global $database;
@@ -61,4 +64,4 @@
             //Will Return True or False
             return array_key_exists($attribute, $subscriptionObjectProperties);
         }
-    }
+    }//End of Class

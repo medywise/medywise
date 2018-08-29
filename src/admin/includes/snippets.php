@@ -42,7 +42,6 @@
     <div class="col-md-2">
     </div>
     <div class="col-md-8">
-
         <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -130,5 +129,3 @@
         </div>
     </div>
 </div>
-
-<hr>

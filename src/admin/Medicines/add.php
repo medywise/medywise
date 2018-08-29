@@ -7,31 +7,63 @@
 } ?>
 <?php
     $message = "";
-    $name = "";
-    $short_name = "";
-    $description = "";
-    $ratings = "";
-    $company_id = "";
-    $category_id = "";
-    $price = "";
-    $tags = "";
-    $type = "";
-    $used_for = "";
-    $also_called = "";
-    $available_as = "";
-    $how_to_store = "";
-    $how_to_take = "";
-    $side_effects = "";
-    $when_to_take = "";
     $medicine = new Medicines();
-    $medicine->addNewMedicine($name, $short_name, $description, $ratings, $company_id, $category_id, $price, $tags, $type, $used_for, $also_called, $available_as, $how_to_store, $how_to_take, $side_effects, $when_to_take);
+
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $short_name = $_POST['short_name'];
+        $description = $_POST['description'];
+        $ratings = $_POST['ratings'];
+        $company_id = $_POST['company_id'];
+        $category_id = $_POST['category_id'];
+        $price = $_POST['price'];
+        $tags = $_POST['tags'];
+        $type = $_POST['type'];
+        $used_for = $_POST['used_for'];
+        $also_called = $_POST['also_called'];
+        $available_as = $_POST['available_as'];
+        $how_to_store = $_POST['how_to_store'];
+        $how_to_take = $_POST['how_to_take'];
+        $side_effects = $_POST['side_effects'];
+        $when_to_take = $_POST['when_to_take'];
+        
+        $message = $medicine->addNewMedicine($name, $short_name, $description, $ratings, $company_id, $category_id, $price, $tags, $type, $used_for, $also_called, $available_as, $how_to_store, $how_to_take, $side_effects, $when_to_take);
+    }
+
+    //categories
+    $sql = "SELECT * FROM categories";
+    $result = $database->query($sql);
+    if ($result->num_rows) {
+        $cat_select = '<select name="category_id" id="category-name-text-content" class="form-control">';
+        while ($r = $database->fetchArray($result)) {
+            $cat_select.='<option value='.$r['id'].'>'.$r['name'].'</option>';
+        }
+        $cat_select.= '</select>';
+    } else {
+        $cat_select = '';
+    }
+
+    //categories
+    $sql_ = "SELECT * FROM company";
+    $result_ = $database->query($sql_);
+    if ($result_->num_rows) {
+        $comp_select = '<select name="company_id" id="company-name-text-content" class="form-control">';
+        while ($r_ = $database->fetchArray($result_)) {
+            $comp_select.='<option value='.$r_['id'].'>'.$r_['name'].'</option>';
+        }
+        $comp_select.= '</select>';
+    } else {
+        $comp_select = '';
+    }
+
+    if (isset($_POST['sub'])) {
+        $medicine->importMedicinesViaFile($_FILES['file']['tmp_name']);
+    }
+
 ?>
 <div id="wrapper">
-    <!-- Navigation -->
     <?php includeAdminCommonFiles('topNavigation.php'); ?>
-    <!-- /.navbar-top-links -->
     <?php includeAdminCommonFiles('sideNavigation.php'); ?>
-    <!-- /.navbar-side-links -->
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -39,7 +71,29 @@
             </div> 
             <div class="panel-body">
                 <div class="row">
-                            <p class="text-primary"><?php echo $message; ?></p>
+                    <p class="text-primary"><?php echo $message; ?></p>
+                    <div class="row">
+                        <div class="col-lg-3">
+                        </div>
+                        <div class="col-lg-6">
+                            <form action="add.php" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <input class="btn btn-outline btn-primary btn-xs" type="file" name="file">
+                                </div>
+                                <button type="submit" name="sub" class="btn btn-primary btn-lg btn-block">Import via File</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                        </div>
+                        <div class="col-lg-7"> 
+                            <br>   
+                            <h3>Or</h3>
+                            <br>
+                        </div>
+                    </div>
+                    
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -57,11 +111,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="company_id">Company</label>
-                                <input type="text" id="company-name-text-content" name="company_id" class="form-control">
+                                <?php echo $comp_select ; ?>
+
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Category</label>
-                                <input type="text" id="category-name-text-content" name="category_id" class="form-control">
+                                <?php echo $cat_select ; ?>
+                                
                             </div>
                             <div class="form-group">
                                 <label for="ratings">Ratings</label>
@@ -135,12 +191,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row --> 
-    </div>
-    <!-- /#page-wrapper -->
-</div>
-<!-- /#wrapper -->
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row --> 
+    </div><!-- /#page-wrapper -->
+</div><!-- /#wrapper -->
 <?php includeAdminCommonFiles('footer.php'); ?>

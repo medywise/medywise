@@ -3,7 +3,7 @@
 <?php require_once("includes/navigation.php"); ?>
 <?php
     if (!$user->userLoggedIn()) {
-        $user->redirect("index.php");
+        $user->redirect("index");
     }
 ?>
 	<div class="container text-center">

@@ -2,16 +2,19 @@
 
 require_once("../../initialize.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['med_name']) && !empty($_POST['med_name'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['med_name']) && !empty($_GET['med_name'])) {
         global $database;
 
-        $med_name = $database->escape($_POST['med_name']);
-        $q = "SELECT id,name FROM medicines WHERE name = '".$med_name."'";
+        $med_name = $database->escape($_GET['med_name']);
+        $q = "SELECT id,name,type FROM medicines WHERE type LIKE '%".$med_name."%'";
         $result = $database->query($q);
 
         if ($result->num_rows) {
-            $row = $result->fetch_assoc();
+            while($r = mysqli_fetch_object($result)){
+                $row[] = $r;
+            }
+            
             $response = array('status'=> 1, 'result'=> $row);
         } else {
             $response = array('status'=> 0, 'message'=> 'No Result Found');

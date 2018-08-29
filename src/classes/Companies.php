@@ -121,28 +121,54 @@
 
         public function addNewCompany($name, $description)
         {
-            if (isset($_POST['submit'])) {
-                $name = $_POST['name'];
-                $description = $_POST['description'];
+            global $session;
 
-                if (strlen($name) > 50) {
-                    $message = "'Name' must be under 40 characters";
+            if (strlen($name) > 50) {
+                $message = "'Name' must be under 40 characters";
+            }
+            
+            if (strlen($description) > 5000) {
+                $message = "'Description' must be under 6000 characters";
+            }
+
+            if (!$session->message()) {
+                $this->name = $name;
+                $this->description = $description;
+                $this->setFile($_FILES['file_upload']);
+
+                if ($this->save()) {
+                    //$message = "New Company added successfully.";
+                    $session->message("New Company added successfully");
+                    $this->redirect("view.php");
                 } else {
-                    if (strlen($description) > 5000) {
-                        $message = "'Description' must be under 6000 characters";
-                    } else {
-                        $this->name = $name;
-                        $this->description = $description;
-                        $this->setFile($_FILES['file_upload']);
-
-                        if ($this->save()) {
-                            $message = "New Company added successfully.";
-                        } else {
-                            $message = join("<br>", $this->customErrors);
-                        }
-                    }
+                    $session->message(join("<br>", $this->customErrors));
                 }
             }
+
+            // if (strlen($name) > 50) {
+            //     $message = "'Name' must be under 40 characters";
+            // }
+
+            // if (strlen($description) > 5000) {
+            //     $message = "'Description' must be under 6000 characters";
+            // }
+
+            // if (!$message) {
+            //     $this->name = $name;
+            //     $this->description = $description;
+
+            //     if (empty($_FILES['file_upload'])) {
+            //         $this->save();
+            //     } else {
+            //         $this->setFile($_FILES['file_upload']);
+
+            //         if ($this->save()) {
+            //             $message = "New Company added successfully.";
+            //         } else {
+            //             $message = join("<br>", $this->customErrors);
+            //         }
+            //     }
+            // }
         }
 
 
@@ -193,6 +219,7 @@
                 }
             }
         }
+
         public function updateCompany($name, $description)
         {
             if (isset($_POST['update'])) {
@@ -207,11 +234,29 @@
                     } else {
                         $this->name = $_POST['name'];
                         $this->description = $_POST['description'];
+                        $this->redirect("view.php");
 
                         $this->save();
                     }
                 }
             }
+                
+            // if (strlen($name) > 50) {
+                //     $message = "'Name' must be under 40 characters";
+                // }
+
+                // if (strlen($description) > 5000) {
+                //     $message = "'Description' must be under 6000 characters";
+                // }
+
+                // if (empty($_FILES['file_update'])) {
+                //     $this->save();
+                // } else {
+                //     $this->name = $_POST['name'];
+                //     $this->description = $_POST['description'];
+
+                //     $this->save();
+                // }
         }//updateCompany(); End
 
 
@@ -253,4 +298,126 @@
                 return false;
             }
         }
-    }
+
+
+        /********************************* Import/Export Categories through Excel/Csv files Method *********************************/
+
+        public function importCompaniesViaFile($file)
+        {
+            global $database;
+
+            $first = false;
+            $this->state_csv = false;
+            $file = fopen($file, 'r');
+
+            while ($row = fgetcsv($file)) {
+                if (!$first) {
+                    $first = true;
+                } else {
+                    $value = "'" . implode("','", $row) . "'";
+
+                    $sql = "INSERT INTO company(name, description) VALUES(" . $value . ")";
+                    if ($database->query($sql)) {
+                        $this->state_csv = true;
+                    } else {
+                        $this->state_csv = false;
+                    }
+                }
+            }
+
+            if ($this->state_csv) {
+                $message = "File added successfully.";
+            } else {
+                $message = "Something went wrong.";
+            }
+        }//importCompaniesViaFile(); End
+
+        // This method adds full page HTML code in the file too
+        public function exportCompaniesViaFile()
+        {
+            global $database;
+
+            $this->state_csv = false;
+
+            $sql = "SELECT c.name, c.description FROM company as c";
+            $result = $database->query($sql);
+
+            if ($database->numRows($result) > 0) {
+                // Sets the file name
+                $fn = "companies_" . uniqid() . ".csv";
+
+                // Either A of B is used at one time
+                // We can also use both of them at a single time, but that was not good practice
+
+                // A
+                //This will save file to the server
+                //$file = fopen($fn, "w");
+
+                //Fetches the result from the row
+                while ($row = $database->fetchArray($result)) {
+                    if (fputcsv($file, $row)) {
+                        $this->state_csv = true;
+                    } else {
+                        $this->state_csv = false;
+                    }
+                }
+
+                // B
+                //This will force file to download
+                header("Content-disposition: attachment; filename=$fn");
+                header('Content-type: text/csv');
+                readfile($fn);
+
+                if ($this->state_csv) {
+                    $message = "File successfully exported";
+                } else {
+                    $message = "Something went wrong.";
+                }
+                fclose($file);
+            } else {
+                $message = "No data found in categories table!";
+            }
+        }//exportCompaniesViaFile(); End
+
+        // This method picks values from databse, but it also adds HTML page header code
+        // But it is minimal as compare with exportCompaniesViaFile() Method
+        public function exportCompaniesToFile()
+        {
+            global $database;
+
+            //get records from database
+            $sql = "SELECT * FROM company ORDER BY id ASC";
+            $result = $database->query($sql);
+
+            if ($database->numRows($result) > 0) {
+                $delimiter = ",";
+                $filename = "companies_" . date('Y-m-d') . ".csv";
+            
+                //create a file pointer
+                $f = fopen('php://memory', 'w');
+            
+                //set column headers
+                $fields = array('ID', 'Name', 'Description');
+                fputcsv($f, $fields, $delimiter);
+            
+                //output each row of the data, format line as csv and write to file pointer
+                while ($row = mysqli_fetch_assoc($result)) {
+                    //$status = ($row['status'] == '1') ? 'Active' : 'Inactive';
+                    $lineData = array($row['id'], $row['name'], $row['description']);
+                    fputcsv($f, $lineData, $delimiter);
+                }
+            
+                //move back to beginning of file
+                fseek($f, 0);
+            
+                //set headers to download file rather than displayed
+                header("Cache-Control: no-cache, no-store, must-revalidate, post-check=0, pre-check=0, public, max-age=31536000");
+                header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachment; filename="' . $filename . '";');
+            
+                //output all remaining data on a file pointer
+                fpassthru($f);
+            }
+            exit;
+        }//exportCompaniesToFile(); End
+    }//End of Class

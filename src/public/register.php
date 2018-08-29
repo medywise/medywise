@@ -1,17 +1,21 @@
-<?php require_once("../initialize.php"); ?>
+<?php
+	$pageTitle = "Register";
+	$pageTitle2 = "Register here to access Medywise";
+	$keywords = "Medywise, register";
+	$description = "Best way to search medicines";
+?>
 <?php require_once("includes/header.php"); ?>
 <?php require_once("includes/header_without_extra_css.php"); ?>
 <?php require_once("includes/nav_unreg.php"); ?>
 <?php $user = new User(); ?>
 <?php if ($user->userLoggedIn()) {
-    $user->redirect("index.php");
+    $user->redirect("index");
 } ?>
 	<div class="container text-center ">
 		<div class="row">
 			<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 foam-sign">
 				<form role="form" method="post">
-					<h2>Please Sign Up </h2>
-					<hr class="colorgraph">
+					<h2>Medywise - Sign Up </h2>
 					<?php
                         $user->displayMessage();
                         $user->validateUserRegistration();
@@ -40,6 +44,23 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="form-group">
+		                        <input type="text" name="counrty" id="counrty" class="form-control input-lg" placeholder="Country" tabindex="1">
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6">
+							<div class="form-group">
+								<input type="text" name="contact" id="contact" class="form-control input-lg" placeholder="Phone Number" tabindex="2">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<input type="text" name="address" id="address" class="form-control input-lg" placeholder="Address" tabindex="4">
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-6">
+							<div class="form-group">
 								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
 							</div>
 						</div>
@@ -51,21 +72,24 @@
 					</div>
 
 					<div class="row">
-						<div class="col-xs-4 col-sm-3 col-md-3">
+						<label for="sex">Gender</label>
+						<input type="radio" name="sex" value="Male" /> Male
+						<input type="radio" name="sex" value="Female" /> Female 
+						<input type="radio" name="sex" value="Other" /> Other
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12">
 							<span class="button-checkbox">
 								<div class="checkbox">
-			  						<label><input type="checkbox" name="iagree" value="">I Agree</label>
+			  						<label><input type="checkbox" name="iagree" value="">I Agree</label> to the <a href="#" >Terms and Conditions</a> set out by Medywise.
 								</div>
 							</span>
 						</div>
-						<div class="col-xs-8 col-sm-9 col-md-9">
-							 By clicking Register, you agree to the <a href="#" >Terms and Conditions</a> set out by Mediwise.
-						</div>
 					</div>
-					<hr class="colorgraph">
 					<div class="row">
+						<div class="col-xs-12 col-md-6"><a href="login" class="btn btn-success btn-block btn-lg">Sign In</a></div>
 						<div class="col-xs-12 col-md-6"><input type="submit" name="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-						<div class="col-xs-12 col-md-6"><a href="login.php" class="btn btn-success btn-block btn-lg">Sign In</a></div>
 					</div>
 				</form>
 			</div>

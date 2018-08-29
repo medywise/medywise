@@ -1,4 +1,5 @@
-<?php 
+<?php
+    /* redeclared here for clarity */
     class Admin extends Main
     {
         protected static $tableName = "admin";
@@ -627,4 +628,4 @@
                 return true;
             }
         }//registerAdmin(); End
-    }
+    }//End of Class

@@ -1,4 +1,3 @@
-<?php //require_once('../../../src/initialize.php');?>
 <?php if (!isset($pageTitle)) {
     $pageTitle = 'Admin Panel';
 } ?>
@@ -34,5 +33,9 @@
         <link href="../../../assets/backend/css/gradient_card_style.css" rel="stylesheet">
         <link href="../../../assets/backend/css/character_count_style.css" rel="stylesheet">
         <link href="../../../assets/backend/css/medicine_character_count_style.css" rel="stylesheet">
+        <!-- DataTable CSS -->
+        <link href="../../../assets/backend/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="../../../assets/backend/css/fixedHeader.bootstrap4.min.css" rel="stylesheet">
+        <link href="../../../assets/backend/css/fixedColumns.bootstrap4.min.css" rel="stylesheet">
     </head>
     <body>

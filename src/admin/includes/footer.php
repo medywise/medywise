@@ -24,5 +24,11 @@
 		<script type="text/javascript" src="../../../assets/backend/js/modals/medicine_modal.js"></script>
 		<script type="text/javascript" src="../../../assets/backend/js/modals/admin_modal.js"></script>
 		<script type="text/javascript" src="../../../assets/backend/js/modals/company_modal.js"></script>
+		<!-- dataTable's Scripts -->
+		<script type="text/javascript" src="../../../assets/backend/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="../../../assets/backend/js/dataTables.bootstrap4.min.js"></script>
+		<script type="text/javascript" src="../../../assets/backend/js/dataTables.fixedHeader.min.js"></script>
+		<script type="text/javascript" src="../../../assets/backend/js/dataTables.fixedColumns.min.js"></script>
+		<script type="text/javascript" src="../../../assets/backend/js/dataTableFunction.js"></script>
 	</body>
 </html>

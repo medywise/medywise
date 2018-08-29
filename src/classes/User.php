@@ -2,7 +2,7 @@
 class User extends Main
 {
     protected static $tableName = "users";
-    protected static $dbTableFields = array('first_name', 'last_name', 'username', 'password', 'email', 'date_of_birth', 'sex', 'address', 'counrty', 'contact', 'profile_pic', 'register_date', 'subscription_status', 'last_login', 'number_of_logins', 'validation_code', 'active');
+    protected static $dbTableFields = array('first_name', 'last_name', 'username', 'password', 'email', 'date_of_birth', 'sex', 'address', 'counrty', 'contact', 'profile_pic', 'register_date', 'subscription_status', 'validation_code', 'active');
 
     public $id;
     public $first_name;
@@ -18,8 +18,6 @@ class User extends Main
     public $profile_pic;
     public $register_date;
     public $subscription_status;
-    public $last_login;
-    public $number_of_logins;
     public $validation_code;
     public $active;
 
@@ -233,7 +231,12 @@ class User extends Main
                 }
             } else {
                 if ($this->loginUser($email, $password, $remember)) {
-                    $this->redirect("index.php");
+                    if(isset($_GET) && !empty($_GET['redirect_to'])){
+                        $this->redirect($_GET['redirect_to']);
+                    }else{
+                        $this->redirect("index");
+                    }
+                    
                 } else {
                     echo $this->validationErrors("Your credentials are incorrect");
                 }
@@ -253,6 +256,12 @@ class User extends Main
 
             if (password_verify($password, $dbPassword)) {
                 if ($remember == "on") {
+                    // guess what we'e using to save remember me?
+                    // that's right
+                    // we're using cookies
+                    // yeah I went there
+                    // we storin this for 3 years, people
+                    // mmh cookie
                     setcookie('email', $email, time() + 86400);
                 }
 
@@ -288,21 +297,22 @@ class User extends Main
                     $result = $database->query($sql);
 
                     $subject = "Please Reset Your Password";
-                    $message = "Hello, <br><br>Here is your Password Reset code:  {$validation_code} <br>Please<a href=\"" . Config::DEVELOPMENT_URL . "/code.php?email=$email&code=$validation_code\"> Click Here </a>to reset your password.<br><br>Thanks,<br>Team Medywise";
+                    $message = "Hello, <br><br>Here is your Password Reset code:  {$validation_code} <br>Please<a href=\"" . Config::DEVELOPMENT_URL . "/code?email=$email&code=$validation_code\"> Click Here </a>to reset your password.<br><br>Thanks,<br>Team Medywise";
                     $header = "From: noreply@website.com";
 
                     $this->sendMail($email, $subject, $message, $header);
                     $this->setMessage("<p class='bg-success text-center'>Please Check Your Email for Password Reset Code</p>");
-                    $this->redirect("index.php");
+
+                    $this->redirect("index");
                 } else {
                     echo $this->validationErrors("This email does not exists");
                 }
             } else {
-                $this->redirect("index.php");
+                $this->redirect("index");
             }
 
             if (isset($_POST['cancel_submit'])) {
-                $this->redirect("login.php");
+                $this->redirect("login");
             }
         }
     }
@@ -313,9 +323,9 @@ class User extends Main
 
         if (isset($_COOKIE['temp_access_code'])) {
             if (!isset($_GET['email']) && !isset($_GET['code'])) {
-                $this->redirect("index.php");
+                $this->redirect("index");
             } elseif (empty($_GET['email']) || empty($_GET['code'])) {
-                $this->redirect("index.php");
+                $this->redirect("index");
             } else {
                 if (isset($_POST['code'])) {
                     $email = $this->clean($_GET['email']);
@@ -327,7 +337,7 @@ class User extends Main
                     if ($database->numRows($result) == 1) {
                         setcookie('temp_access_code', $validation_code, time() + 900);
 
-                        $this->redirect("reset.php?email=$email&code=$validation_code");
+                        $this->redirect("reset?email=$email&code=$validation_code");
                     } else {
                         echo $this->validationErrors("Sorry, wrong validation code!!");
                     }
@@ -335,7 +345,7 @@ class User extends Main
             }
         } else {
             $this->setMessage("<p class='bg-danger text-center'>Sorry, Validation Session Expired!!</p>");
-            $this->redirect("recover.php");
+            $this->redirect("recover");
         }
     }
 
@@ -347,14 +357,13 @@ class User extends Main
                 if (isset($_SESSION['token']) && isset($_POST['token'])) {
                     if ($_POST['token'] === $_SESSION['token']) {
                         if ($_POST['password'] === $_POST['confirm_password']) {
-                            //$updatedPassword = md5($_POST['password']);
                             $updatedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
 
                             $sql = "UPDATE users SET password = '" . $database->escape($updatedPassword) . "', validation_code = 0, active = 1 WHERE email = '" . $database->escape($_GET['email']) . "'";
                             $database->query($sql);
 
                             $this->setMessage("<p class='bg-success text-center'>Password Updated! Please Login</p>");
-                            $this->redirect("login.php");
+                            $this->redirect("login");
                         } else {
                             $this->setMessage("<p class='bg-danger text-center'>Passwords Don't Match</p>");
                         }
@@ -363,14 +372,14 @@ class User extends Main
             }
         } else {
             $this->setMessage("<p class='bg-danger text-center'>Sorry, Session Expired</p>");
-            $this->redirect("recover.php");
+            $this->redirect("recover");
         }
     }
 
 
     /********************************* Methods To Register For New User *********************************/
 
-    public function registerUser($first_name, $last_name, $username, $email, $password)
+    public function registerUser($first_name, $last_name, $username, $email, $password, $sex, $address, $counrty, $contact)
     {
         global $database;
 
@@ -379,6 +388,10 @@ class User extends Main
         $username = $database->escape($username);
         $email = $database->escape($email);
         $password = $database->escape($password);
+        $sex = $database->escape($sex);
+        $address = $database->escape($address);
+        $counrty = $database->escape($counrty);
+        $contact = $database->escape($contact);
 
         if ($this->emailExists($email)) {
             return false;
@@ -388,12 +401,12 @@ class User extends Main
             $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
             $validation_code = md5($username . microtime());
 
-            $sql = "INSERT INTO users(first_name, last_name, username, email, password, validation_code, active)";
-            $sql .= " VALUES('$first_name', '$last_name', '$username', '$email', '$password', '$validation_code', 0)";
+            $sql = "INSERT INTO users(first_name, last_name, username, email, password, register_date, sex, address, counrty, contact, validation_code, active)";
+            $sql .= " VALUES('$first_name', '$last_name', '$username', '$email', '$password', NOW(), '$sex', '$address', '$counrty', '$contact', '$validation_code', 0)";
             $result = $database->query($sql);
 
             $subject = "Activate Account";
-            $msg = "Hello, <br><br>Welcome To Medywise.<br><br>Please click the link below to activate your Account<br><a href=\"" . Config::DEVELOPMENT_URL . "/activate.php?email=$email&code=$validation_code\"> Link Here </a>.<br><br>Thanks,<br>Team Medywise";
+            $msg = "Hello, <br><br>Welcome To Medywise.<br><br>Please click the link below to activate your Account<br><a href=\"" . Config::DEVELOPMENT_URL . "/activate?email=$email&code=$validation_code\"> Link Here </a>.<br><b>Enjoy yor 30-day Free Trial.</b><br><br>Thanks,<br>Team Medywise";
             $header = "From: noreply@website.com";
 
             $this->sendMail($email, $subject, $msg, $header);
@@ -414,6 +427,11 @@ class User extends Main
             $email = $this->clean($_POST['email']);
             $password = $this->clean($_POST['password']);
             $confirm_password = $this->clean($_POST['confirm_password']);
+            $sex = $this->clean($_POST['sex']);
+            $address = $this->clean($_POST['address']);
+            $counrty = $this->clean($_POST['counrty']);
+            $contact = $this->clean($_POST['contact']);
+            $register_date = date('Y-m-d');
 
             if (strlen($first_name) < $min) {
                 $errors[] = "First Name cannot be less than {$min} characters.</br>";
@@ -456,12 +474,12 @@ class User extends Main
                     echo $this->validationErrors($error);
                 }
             } else {
-                if ($this->registerUser($first_name, $last_name, $username, $email, $password)) {
+                if ($this->registerUser($first_name, $last_name, $username, $email, $password, $sex, $address, $counrty, $contact, $register_date)) {
                     $this->setMessage("<p class='bg-success text-center'>Please check your Email for activation Link.</p>");
-                    $this->redirect("index.php");
+                    $this->redirect("index");
                 } else {
                     $this->setMessage("<p class='bg-danger text-center'>Sorry we could not register the user.</p>");
-                    $this->redirect("index.php");
+                    $this->redirect("index");
                 }
             }
         }
@@ -484,12 +502,83 @@ class User extends Main
                     $result2 = $database->query($updateQuery);
 
                     $this->setMessage("<p class='bg-success'>Your Account Has Been Activated. Please Login!</p>");
-                    $this->redirect("Login.php");
+                    $this->redirect("login");
                 } else {
                     $this->setMessage("<p class='bg-danger'>Sorry! Your Account Could Not Been Activated.</p>");
-                    $this->redirect("Login.php");
+                    $this->redirect("login");
                 }
             }
         }
     }
-}
+
+
+    /********************************* Method To Check Subscription Status of the User *********************************/
+
+    
+    /* I have no idea why this function works, but it does,
+    so it's probably best to leave it alone unless you
+    know how/why it works */
+    public function checkSubscriptionStatus()
+    {
+        global $database;
+
+        $q = 'Select * from users where email="' . $_SESSION['email'] . '"';
+        $result = mysqli_fetch_object($database->query($q));
+
+        $date1 = date_create($result->register_date);
+        $date2 = date_create(date("Y-m-d"));
+        $days = date_diff($date1, $date2)->days;
+        // print_r($days);
+        if ($days > 21) { // 21 days check
+            if (!$result->subscription_status && !$result->tranxid) {
+                header("Location: /subscribe");
+            }
+        }
+    }//checkSubscriptionStatus(); End
+    
+    public function checkSubscriptionStatusOnSubscribePage()
+    {
+        global $database;
+
+        $q = 'Select * from users where email="' . $_SESSION['email'] . '"';
+        $result = mysqli_fetch_object($database->query($q));
+
+        $date1 = date_create($result->register_date);
+        $date2 = date_create(date("Y-m-d"));
+        $days = date_diff($date1, $date2)->days;
+        // print_r($days);
+        if ($days > 21) { // 21 days check
+            if (!$result->subscription_status && !$result->tranxid) {
+                echo "<h1 class='bg-danger'>It seems like your trial period has expired!!</h1/>";
+            }
+        }
+    }
+
+
+    /********************************* Contact Us Method *********************************/
+
+    
+    public function contactUs()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $name = $this->clean($_POST['name']);
+            $mobile_nmbr = $this->clean($_POST['mobile_nmbr']);
+            $email = $this->clean($_POST['email']);
+            $msg = $this->clean($_POST['message']);
+
+            $to = "info.medywise@gmail.com";
+
+            $subject = "New Message From Contact Page";
+            $message = "Hello, <br><br>{$name}, {$mobile_nmbr} sends you a message..<br> This is your message <br>'{$msg}'";
+
+            if($this->sendContactEmail($to, $email, $name, $message))
+            {
+                $this->setMessage("<p class='bg-success text-center'>Message successfully sent</p>");
+                $this->redirect("contact");
+            }
+            // } else {
+            //     echo $this->validationErrors("Message sending failed");
+            // }
+        } 
+    }//contactUs(); End
+}//End of Class

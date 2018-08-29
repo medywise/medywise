@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Medywise</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="top-header">
+            <h1>Medywise
+                </h1/>
+                <span> We know how important is to <b>get the right medicine</b> </span>
+        </div>
+        <div class="search">
+            <div class="search-top">
+                <input type="text" class="scrh" id="searchBox" placeholder="Type a medicine name and hit enter to search" />
+            </div>
+        </div>
+        <div class="box"></div>
+    </div>
+</body>
+
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.0';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<script>
+    const SEARCH_MEDICINES_URL = 'http://dev-medical-web.pantheonsite.io/src/api/medicines/search.php';
+    const GET_MEDICINES_URL = 'http://dev-medical-web.pantheonsite.io/src/api/medicines/search.php/';
+    const GET_SUGGESTIONS_URL = 'http://dev-medical-web.pantheonsite.io/src/api/medicines/suggestions.php';
+
+    const getSuggestions = () => {
+        data = JSON.stringify([{ "company_name": "Crocin", "medicine_name": "Superfast", "id": 2 }, { "company_name": "Crocin", "medicine_name": "500", "id": 3 }]);
+        return ({ message: 'success', results: JSON.parse(data) });
+
+        // $.ajax(GET_SUGGESTIONS_URL, {
+        //     success: function(data) {
+        //         return({ message: 'success', results: JSON.parse(data) });
+        //     },
+        //     error: function() {
+        //         return({ message: 'failure' });
+        //     }
+        // });
+    };
+
+    const getSearchResults = search => {
+        data = JSON.stringify([{ "company_name": "Crocin", "medicine_name": "Superfast", "id": 2 }, { "company_name": "Crocin", "medicine_name": "500", "id": 3 }]);
+        return ({ message: 'success', results: JSON.parse(data) });
+
+        // $.ajax(SEARCH_MEDICINES_URL + search, {
+        //     success: function(data) {
+        //         return({ message: 'success', results: JSON.parse(data) });
+        //     },
+        //     error: function() {
+        //         return({ message: 'failure' });
+        //     }
+        // });
+    };
+
+    const getMedicines = (id) => {
+        data = JSON.stringify([{ "id": 1, "company_name": "Crocin", "name": "Superfast", "ratings": "4.6", "description": "Crocin 500 is used for headache", "used_for": "Headache" }, { "id": 2, "company_name": "Crocin", "name": "Superfast", "ratings": "4.4", "description": "Crocin 500 is used for headache", "used_for": "Headache" }, { "id": 3, "company_name": "Crocin", "name": "Superfast", "ratings": "4.4", "description": "Crocin 500 is used for headache", "used_for": "Headache" }]);
+        return ({ message: 'success', results: JSON.parse(data) });
+
+        // $.ajax(GET_MEDICINES_URL + '/' + e.target.dataset.id, {
+        //     success: function(data) {
+        //         return({ message: 'success', results: JSON.parse(data) });
+        //     },
+        //     error: function() {
+        //         return({ message: 'failure' });
+        //     }
+        // });
+    };
+
+    const getMedicine = (id) => {
+        data = JSON.stringify({ "id": 1, "company_name": "Crocin", "name": "Superfast", "ratings": "4.6", "description": "Crocin 500 is used for headache", "used_for": "Headache" });
+        return ({ message: 'success', results: JSON.parse(data) });
+
+        // $.ajax(GET_MEDICINES_URL + '/' + e.target.dataset.id, {
+        //     success: function(data) {
+        //         return({ message: 'success', results: JSON.parse(data) });
+        //     },
+        //     error: function() {
+        //         return({ message: 'failure' });
+        //     }
+        // });
+    };
+
+    const copyCardText = (id) => {
+        const el = document.createElement('textarea');
+        el.setAttribute("id", "medDetails");
+        const { status, results = '' } = getMedicine(id);
+
+        if ('failure' === status) {
+            showError();
+        } else {
+            const text = "Name: "
+                + results.name +
+                "\r\nCompany Name: "
+                + results.company_name +
+                "\r\nRatings: "
+                + results.company_name +
+                "\r\nDescription: "
+                + results.description +
+                "\r\nUsed for: "
+                + results.used_for;
+            el.value = text;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            alert("Text copied to clipboard.");
+        }
+    };
+
+    const showError = () => {
+        $('.box').html('Something went wrong!');
+    };
+
+    const renderResults = (searchTerm) => {
+        const { status, results = '' } = getSearchResults(searchTerm);
+
+        if ('failure' === status) {
+            showError();
+        } else {
+            renderSearchResults(results);
+        }
+    };
+
+    const renderSearchResults = results => {
+        let searchResults = '';
+
+        results.forEach(result => {
+            searchResults += '<li class="medicalbox" onclick="renderMedicines('
+                + result.id +
+                ')"><div>'
+                + result.company_name +
+                ' <b>'
+                + result.medicine_name +
+                '</b></div></li>';
+        });
+
+        $(".box").html('<ul>' + searchResults + '</ul>');
+    }
+
+    const renderMedicines = id => {
+        let cards = '';
+        const { status, results = '' } = getMedicines(id);
+
+        if ('failure' === status) {
+            showError();
+        } else {
+            results.forEach(result => {
+                text = '<div class="card" id="card-'
+                    + result.id +
+                    '"><div class="card-body"><span>'
+                    + result.ratings +
+                    '*</span><h4 class="card-title">'
+                    + result.company_name +
+                    ' '
+                    + result.name +
+                    '</h4><p class="card-text">'
+                    + result.description +
+                    '</p><h5 class="card-title">'
+                    + result.used_for +
+                    '</h5><p class="card-text"></p><p class="readmore card-'
+                    + result.id +
+                    '" onclick="renderMoreOptions('
+                    + result.id +
+                    ')">More Options</p></div></div>';
+
+                cards += text;
+            });
+
+            $(".box").html('<div class="bootm-box">' + cards + '</div>');
+        }
+    }
+
+    const renderMoreOptions = id => {
+        const html = '<br><div id="moreOptions-'
+            + id +
+            '"><div class="new-btn"><a href="#" class="btn btn-primary" onclick="copyCardText('
+            + id +
+            ')">Copy Text</button><a href="#" class="btn btn-primary" onclick="renderShareButtons('
+            + id +
+            ')">Share</a></div></div>';
+        const moreOptions = $(".readmore.card-" + id);
+
+        moreOptions.empty();
+        moreOptions.html(html);
+        $('.bootm-box').addClass('bootm-box3').removeClass('bootm-box');
+        moreOptions.contents().unwrap();
+    };
+
+    const renderShareButtons = (id) => {
+        const el = $('<div id="shareButtons-"' + id + '></div>');
+        el.append(renderFbShareButton(id));
+        const parent = $('#moreOptions-' + id);
+        parent.append(el);
+    };
+
+    const renderFbShareButton = (id) => (
+        '<div class="fb-share-button" data-href="https://www.medywise.com/medicines/123" data-layout="button" data-size="small" data-mobile-iframe="true">'
+        + '<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.medywise.com%2Fmedicines%2F123&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">'
+        + 'Share'
+        + '</a></div>'
+    );
+
+    const renderSuggestions = (() => {
+        const { status, results = '' } = getSuggestions();
+
+        if ('failure' === status) {
+            showError();
+        } else {
+            renderSearchResults(results);
+        }
+    })();
+
+    $("#searchBox").keyup(function (e) {
+        e.preventDefault();
+        if (e.keyCode === 13) {
+            renderResults(e.target.value);
+        }
+    });
+
+</script>
+
+</html>
