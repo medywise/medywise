@@ -25,4 +25,5 @@
     $_SESSION['birthday'] = $userData['birthday']; //Date Of Birth
 
     header("Location: ../../public/index.php");
+    user_log_action('Login', "{$_SESSION['email']} logged in via Google.");
     exit();

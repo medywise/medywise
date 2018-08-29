@@ -1,4 +1,4 @@
-<?php require_once("../initialize.php"); ?>
+<?php //require_once("../initialize.php");?>
 <?php require_once SITE_ROOT . DS . 'api' . DS . 'google' . DS . 'google_config.php'; ?>
 <?php $user = new User(); ?>
 <?php
@@ -11,5 +11,6 @@
         unset($_SESSION['access_token']);
         $gClient->revokeToken(['refresh_token' => 'xxx']);
     }
-    $user->redirect("login.php");
+    $user->redirect("login");
+    //$user->redirect("login.php");
 ?>

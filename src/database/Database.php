@@ -1,5 +1,6 @@
 <?php 
     require_once('config.php');
+    /* IF DOLPHINS ARE SO SMART, HOW COME THEY LIVE IN IGLOOS? */
 
     class Database
     {
@@ -12,7 +13,7 @@
 
         public function openDatabaseConnection()
         {
-            $this->connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            $this->connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME,'18530');
             if ($this->connection->connect_errno) {
                 die("Database Connection Failed" . mysqli_error());
             }

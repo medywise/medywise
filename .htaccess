@@ -1,26 +1,67 @@
-### MAIN DEFAULTS
-Options +ExecCGI -Indexes
-DirectoryIndex index.html index.htm index.php
-DefaultLanguage en-US
-AddDefaultCharset UTF-8
-ServerSignature Off
-
-### REWRITES AND REDIRECTS
-# REQUEST METHODS: GET,POST,PUT,DELETE,CONNECT,OPTIONS,PATCH,PROPFIND,
-#                  PROPPATCH,MKCOL,COPY,MOVE,LOCK,UNLOCK
-
-## REWRITE DEFAULTS
-#Options +FollowSymLinks
+# invoke rewrite engine
 RewriteEngine On
-#RewriteCond ${REQUEST_FILENAME} !-f
-#RewriteRule ^([^\.]+)$ $1.php [NC,L]
-#RewriteEngine On
-#RewriteCond %{SCRIPT_FILENAME} !-d
-#RewriteRule ^([^.]+)$ .php [NC,L]
+RewriteBase /src/public/
 
-## PROTECT FILES
-<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php [L]
+
+# PROTECT FILES
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh|txt)$">
   Order Allow,Deny
   Deny from all
 </FilesMatch>
 
+# Disable Directory Browses
+Options -Indexes
+
+# Error 403 Redirect Page
+ErrorDocument 403 /src/public/errors/403AccessForbidden.php
+
+# Error 500 Redirect Page
+ErrorDocument 500 /src/public/errors/500InternalServer.php
+
+# Improve caching for better site speed
+# 1 Month for most static resources
+<FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
+	Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>
+
+# PHP error handling for production servers
+# Suppress PHP errors from displaying in the browser
+# Do not use when live. Total hackjob
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+
+#Enable this in live website
+# php_flag display_startup_errors off
+# php_flag display_errors off
+# php_flag html_errors off
+
+# disable formatting of error reference links
+php_value docref_root 0
+
+# disable formatting of error reference links
+php_value docref_ext 0
+
+# Enable PHP error logging '32767'
+php_flag log_errors on
+php_value error_log  /src/logs/errors/PHP_errors.log
+
+# general directive for setting php error level
+php_value error_reporting -1
+
+# disable repeated error logging
+php_flag ignore_repeated_errors on
+php_flag ignore_repeated_source on
+
+# enable logging of php memory leaks
+php_flag report_memleaks on
+
+# prevent access to PHP error log
+<Files PHP_errors.log>
+ Order Allow,Deny
+ Deny from all
+ #Satisfy All
+</Files>

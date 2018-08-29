@@ -1,16 +1,118 @@
+html {
+  font-family: 'Roboto', sans-serif !important;
+}
+  
 body{
     margin:0px;
     padding:0px;
+    background: rgb(247, 247, 247) !important;
+
 }
 
 body::-webkit-scrollbar {
   display: none;
 }
 
-.top-header {
-    padding-bottom: 50px;
+.pg-heading{
+    margin-top: 0rem;
 }
 
+.wid input{
+    width: 100% !important;
+}
+
+.ckbx {
+
+     width: auto !important;
+}
+
+.foam-signn {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 11px;
+    box-shadow: 0px 0px 10px 0px #ddd;
+    background: #fff;
+     padding-right: 15px;
+    padding-left: 15px;
+}
+
+.foam-signn  h2 {
+    font-size: 30px;
+    margin-top: 0px;
+    /* background: #062c2e4; */
+    padding: 10px;
+    color: #000;
+}
+
+.foam-signn input {
+    /* border: 0px 0px transparent; */
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 6px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none;
+}
+
+#emaill {
+    border: 0px 0px transparent;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 6px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none;
+}
+
+#name {
+    border: 0px 0px transparent;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 6px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none;
+}
+
+#mobile_nmbr {
+    border: 0px 0px transparent;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 6px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none;
+}
+
+#contact-msg {
+    border: 0px 0px transparent;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 6px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none;
+}
+
+#sub_btn {
+    border-radius: 6px;
+}
+     
+/* Firefox is a special princess, just like Chrome & Edge,
+who needs special Properties to remove scroll bar.
+As we have Properties for Chrome & Edge,
+we added the Properties, but we dont know about Firefox.
+So, if you know that special command, please insert here.
+Otherwise do your own work!!
+*/
+
+.top-header {
+    padding-bottom: 0px;
+}
+.top-header h1 {
+    margin-top: 13px;
+    margin-bottom: 10px;
+}
 .top-header  span{font-size:15px; font-family:arial; }
 
 .top-header span {
@@ -20,7 +122,11 @@ body::-webkit-scrollbar {
     padding-top: 10px;
 }
 
-.video{ padding-top:20px;}
+.video{ padding-top:0px;}
+
+#demos .owl-carousel {
+    margin: 1rem 0;
+}
 .video h2 {
     list-style: italic;
     font-size: 12px;
@@ -36,27 +142,58 @@ body::-webkit-scrollbar {
     width: 220px;
     height: 150px;
     border-radius: 20px;
-	    box-shadow: 0px 9px 18px 0px #ddd;
+        box-shadow: 0px 9px 18px 0px #ddd;
 }
 
  .or{
-    display: inherit;
+    display:inline-block;
     color: #ddd;
+    width: 4%;
 }
-
-.wrk{  padding-bottom:20px;}
-
+a.logn {
+    display: inline-flex;
+        text-decoration: none;
+   
+}
+.wrk {
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+    padding-left: 48px;
+    padding-right: 40px;
+    border-radius: 8px;
+    margin-top: 10px;
+    top: 5px;
+    position: relative;
+    width: 291px;
+}
 .add {
-    width: 391px;
-    background: #eb5c56;
-    margin-top: 24px;
+    width: 291px;
+    background: #cf2a23;
+    margin-top: 0px;
     border-radius: 8px;
     border: 0px solid;
     margin-bottom: 10px;
     padding: 14px;
     font-size: 17px;
     color: #fff;
-	 box-shadow: 0px 9px 18px 0px #ddd;
+     box-shadow: 0px 9px 18px 0px #ddd;
+    font-weight: 900;
+}
+
+.paybycard {
+    width: 250px;
+    background: #ff8d00;
+    margin-top: 30px;
+    border-radius: 8px;
+    border: 0px solid;
+    margin-bottom: 10px;
+    padding: 14px;
+    font-size: 17px;
+    color: #fff;
+     box-shadow: 0px 9px 18px 0px #ddd;
     font-weight: 900;
 }
 
@@ -64,7 +201,7 @@ nav {
     background: #132a41;
     padding: 10px;
     color: #fff;
-	    margin-bottom: 41px;
+        margin-bottom: 41px;
 }
 .logo {
     font-size: 21px;
@@ -99,6 +236,10 @@ nav {
     padding-left: 6px;
 }
 
+.card_btn {
+    text-align: center;
+}
+
 .search .box {
     display: flex;
     width: 100%;
@@ -106,7 +247,8 @@ nav {
 }
 .box ul li {
     /* border: 1px solid #ccc; */
-    padding: 26px;
+    padding: 8px 39px;
+        border-radius: 5px;
     display: inline-block;
     box-shadow: 0 7px 10px #ccc;
     margin: 0 auto;
@@ -118,6 +260,12 @@ nav {
     /* height: 77px; */
     margin-bottom: 20px;
     text-align: center;
+}
+
+.box ul li:hover {
+    background: #ccc !important;
+    /* width: 100%; */
+    cursor: pointer;
 }
 
 .box ul {
@@ -164,7 +312,8 @@ nav {
     margin-left: 11px;
     box-shadow: 0px 0px 25px 0px #f3f3f3;
     text-align: left;
-	    margin-bottom: 12px;
+        margin-bottom: 12px;
+        background: #fff;
 }
 
 .blu{background:#d6f4f4;}
@@ -186,9 +335,9 @@ nav {
     margin-left: 11px;
     box-shadow: 0px 0px 25px 0px #f3f3f3;
     text-align: left;
-	    margin-bottom: 12px;
-		    display: inline-grid;
-			grid-row-start: 2;
+        margin-bottom: 12px;
+            display: inline-grid;
+            grid-row-start: 2;
 }
 .grid-inner-2 h1 {
     font-size: 12px;
@@ -213,14 +362,16 @@ nav {
 }
 
 .grid-full{
-	  float: left;
-	 border-radius: 10px;
+      /*float: left;*/
+     border-radius: 10px;
     margin-left: 11px;
     box-shadow: 0px 0px 25px 0px #f3f3f3;
     text-align: left;
-	    margin-bottom: 2px;
-		padding: 20px;
-		    margin-top: 27px;
+        margin-bottom: 2px;
+        padding: 20px;
+        background: #fff;
+            margin-top: 27px;
+            display: block;
 }
 
 .grid-full h1 {
@@ -233,10 +384,10 @@ nav {
 }
 
 .bootm-box4 .new-btn {
-    position: relative;
+    position:relative;
     width: 100%;
-    display: inline;
-    margin-top: 9px;
+    display:inline;
+    margin-top:9px;
 }
 
 .new-btn {
@@ -301,19 +452,20 @@ nav {
     padding: 20px;
     margin-top: 27px;
     box-shadow: 0px 0px 10px 0px #ddd;
+    background: #fff;
 }
 
 .foam-sign  h2 {
     font-size: 30px;
     margin-top: 0px;
-    background: #62c2e4;
+    background: #062c2e4;
     padding: 10px;
-    color: #fff;
+    color: #000;
 }
 
 .box h4 {
     /* border: 1px solid #ccc; */
-    padding: 15px;
+    padding: 9px;
     display: inline-block;
     box-shadow: 0 7px 10px #ccc;
     margin: 0 auto;
@@ -323,16 +475,73 @@ nav {
     /* line-height: 72px; */
     width: 125px;
     /* line-height: 41px; */
-    height: 77px;
+    height: 57px;
     font-weight: normal !important;
     font-size: 15px;
     margin-bottom: 20px;
     text-align: center;
+    border-radius: 5px;
+}
+
+.clr1 {
+    background-color: #2deded !important;
+}
+
+.clr2 {
+    background-color: #83e9ea !important;
+}
+
+.clr3 {
+    background-color: #7ff4f4 !important;
+}
+
+.clr4 {
+    background-color: #c9f1f2 !important;
+}
+
+.clr5 {
+    background-color: #d9f4f4 !important;
+}
+.scrh.ui-autocomplete-input {
+    width: 100%;
+    display: initial;
+    box-shadow: 6px 9px 14px 1px #ddd;
+    border:none;
+}
+.box h4:hover {
+    background: #ccc !important;
+    /* width: 100%; */
+    cursor: pointer;
+}
+form.search_med_form {
+    padding-top: 37px;
+}
+.search_med_form .opselect {
+    width: 20%;
+    display: inline-block;
+    float: left;
+}
+.dropdown-toggle {
+    background: #132a41;
+    border: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.new-btn a.btn.btn-primary:hover{
+    background: #ccc !important;
+    /* width: 100%; */
+    cursor: pointer;
+}
+
+.grid-inner:hover {
+    box-shadow: 0px 8px 20px 0px #ccc;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1198px) {
-	
-	.search {
+    
+    .search {
             width: 100%;
         }
 
@@ -374,20 +583,90 @@ nav {
     }
 }
 
+
+button:hover, button:focus, .button:hover, .button:focus {
+    background-color: none !important;
+}
+
+.loginBtn {
+    box-sizing: border-box;
+    position: relative;
+    /* width: 13em; */
+    margin: 0.2em;
+    padding: 0 15px 0 46px;
+    border: none;
+    text-align: left;
+    line-height: 34px;
+    white-space: nowrap;
+    border-radius: 0.2em;
+    font-size: 17px;
+    color: #FFF;
+    width: 92%;
+}
+
+.foam-sign input {
+
+    border: 0px 0px transparent;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 6px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none;
+    width: 110px;
+
+}
+
+
+.txtara_contact textarea {
+    max-width: 100%;
+    font-size: 14px !important;
+}
+
+div#about {
+    padding-bottom: 199px;
+    padding-top: 127px;
+}
+
+div#contact {
+     padding-top: 55px;
+    padding-bottom: 190px;
+}
+
 @media screen and (max-width: 768px) {
-	
-	.grid-inner {
+
+    div#contact {
+    padding-bottom: 0px;
+}
+
+
+    div#about {
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.search_med_form .opselect {width: 100%;}
+    .scrh.ui-autocomplete-input {
+    width: 100%;}
+    
+    .wrk {width:100%;}
+    .grid-inner {
         display: inline-grid;
         width: 100%;
-	    margin-left: 0px;
+        margin-left: 0px;
     }
     
-	.add {
+    .add {
         width: 100%;
-	}
-	
-	.inner-video ul {
+    }
+    
+    .inner-video ul {
         margin: 0px;
         padding: 0px;
     }
+
+
+    a.logn {
+    display: block;
+}
 }

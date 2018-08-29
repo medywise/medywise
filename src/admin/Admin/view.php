@@ -48,7 +48,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <?php require_once ADMIN_PATH . DS . 'includes' . DS . 'paginate_code.php'; ?>
+                        <?php //require_once ADMIN_PATH . DS . 'includes' . DS . 'paginate_code.php';?>
                     </div><!-- /.panel-body -->
                 </div><!-- /.panel -->
             </div><!-- /.col-lg-6 -->

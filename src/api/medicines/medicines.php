@@ -2,11 +2,11 @@
 
 require_once("../../initialize.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['med_id']) && !empty($_POST['med_id'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['med_id']) && !empty($_GET['med_id'])) {
         global $database;
 
-        $med_id = $database->escape($_POST['med_id']);
+        $med_id = $database->escape($_GET['med_id']);
         $q = "SELECT m.name,m.description,m.ratings,m.clicks,m.company_id,m.cat_id,m.price,m.type,m.used_for,m.also_called,m.available_as,m.how_to_store,m.how_to_take,m.side_effects,m.when_to_take,c.name as company_name FROM medicines as m LEFT JOIN company as c on m.company_id = c.id WHERE m.id = '".$med_id."'";
  
         $result = $database->query($q);

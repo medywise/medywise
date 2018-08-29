@@ -7,17 +7,21 @@
 } ?>
 <?php
     $message = "";
-    $name = "";
-    $description = "";
     $category = new Categories();
-    $category->addNewCategory($name, $description);
+
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $category->addNewCategory($name, $description);
+    }
+
+    if (isset($_POST['sub'])) {
+        $category->importCategoriesViaFile($_FILES['file']['tmp_name']);
+    }
 ?>
 <div id="wrapper">
-    <!-- Navigation -->
     <?php includeAdminCommonFiles('topNavigation.php'); ?>
-    <!-- /.navbar-top-links -->
     <?php includeAdminCommonFiles('sideNavigation.php'); ?>
-    <!-- /.navbar-side-links -->
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -45,6 +49,19 @@
                         </form>
                     </div>
                 </div><!-- Form Ends -->
+                <br><hr>
+                <div class="row">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-6">
+                        <form action="add.php" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input type="file" class="btn btn-outline btn-primary btn-xs" name="file">
+                            </div>
+                            <button type="submit" name="sub" class="btn btn-primary btn-lg btn-block">Import via File</button>
+                        </form>
+                    </div>
+                </div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row --> 
     </div><!-- /#page-wrapper -->

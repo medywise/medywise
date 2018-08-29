@@ -1,9 +1,7 @@
-/vendor
 /.idea
 /.vscode
 /db
-/src/api/google/google_config.php
-/src/api/facebook/facebook_config.php
-Medywise Credentials.txt
-To DO.txt
-Mediwise_Page_Structure.pdf
+/src/classes/Config.php
+/vendor
+pantheon.upstream.yml
+pantheon.yml

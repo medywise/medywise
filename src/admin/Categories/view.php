@@ -5,6 +5,13 @@
     header("Location: ../login.php");
     die;
 } ?>
+<?php
+    $cat = new Categories();
+    if(isset($_POST['exp']))
+    {
+        $cat->exportCategoriesToFile();
+    }
+?>
 <?php require_once('includes/view_categories.php'); ?>
 <div id="wrapper">
     <!-- Navigation -->
@@ -15,14 +22,20 @@
     <div id="page-wrapper">
         <div class="row">
         <br>
-            <!-- <div class="col-lg-12">
-                <h1 class="page-header">Categories</h1>
-            </div>  -->
             <!-- Table Starts -->
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Categories
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="col-lg-3">
+                                <form method="post" enctype="multipart/form-data">
+                                    <button type="submit" name="exp" class="btn btn-primary btn-lg btn-block">Export to File</button>
+                                </form>
+                            </div>
+                        </div>
                     </div><!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -52,7 +65,7 @@
                                 </tbody>
                             </table>
                         </div><!-- /.table-responsive -->
-                        <?php require_once ADMIN_PATH . DS . 'includes' . DS . 'paginate_code.php'; ?>
+                        <?php //require_once ADMIN_PATH . DS . 'includes' . DS . 'paginate_code.php';?>
                     </div><!-- /.panel-body -->
                 </div><!-- /.panel -->
             </div><!-- /.col-lg-6 -->

@@ -20,8 +20,28 @@
 
         if ($company) {
             $company->updateCompany($name, $description);
+            $session->message("The Company has been updated");
         }
     }
+
+    // if (empty($_GET['id'])) {
+    //     redirectTo("view.php");
+    // } else {
+    //     $company = Companies::findCompanyById($_GET['id']);
+            
+    //     // $message = "";
+    //     // $name = "";
+    //     // $description = "";
+
+    //     if (isset($_POST['update'])) {
+    //         $name = $_POST['name'];
+    //         $description = $_POST['description'];
+
+    //         if ($company) {
+    //             $company->updateCompany($name, $description);
+    //         }
+    //     }
+    // }
 ?>
 <div id="wrapper">
     <!-- Navigation -->
@@ -36,7 +56,6 @@
             </div> 
             <div class="panel-body">
                 <div class="row">
-                <p class="text-primary"><?php echo $message; ?></p>
                     <div class="col-lg-8">
                         <form action="" method="post">
                             <div class="form-group">
@@ -45,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea name="description" class="form-control" id="" cols="30" rows="10"><?php echo $company->description; ?></textarea>
+                                <textarea name="description" class="form-control" cols="30" rows="10"><?php echo $company->description; ?></textarea>
                             </div>
                             <div class="form-group admin_image_box">
                                 <label for="company_image">Image</label>

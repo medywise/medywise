@@ -13,8 +13,10 @@
 
     if ($company) {
         $company->deleteCompany();
+        $session->message("The Company has been deleted");
         redirectTo("view.php");
     } else {
+        $session->message("The Company has not been deleted");
         redirectTo("view.php");
     }
 ?>

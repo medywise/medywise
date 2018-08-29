@@ -5,25 +5,33 @@
     header("Location: ../login.php");
     die;
 } ?>
+<?php
+    $med = new Medicines();
+    if (isset($_POST['exp'])) {
+        $med->exportMedicinesToFile();
+    }
+?>
 <?php require_once('includes/view_medicine.php'); ?>
 <div id="wrapper">
-    <!-- Navigation -->
     <?php includeAdminCommonFiles('topNavigation.php'); ?>
-    <!-- /.navbar-top-links -->
     <?php includeAdminCommonFiles('sideNavigation.php'); ?>
-    <!-- /.navbar-side-links -->
     <div id="page-wrapper">
         <div class="row">
         <br>
-            <!-- <div class="col-lg-12">
-                <h1 class="page-header">View Medicines</h1>
-            </div>  -->
-            
             <!-- Table Starts -->
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Medicines
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <h3>Medicines</h3>
+                            </div>
+                            <div class="col-lg-3">
+                                <form method="post" enctype="multipart/form-data">
+                                    <button type="submit" name="exp" class="btn btn-primary btn-lg btn-block">Export to File</button>
+                                </form>
+                            </div>
+                        </div>
                     </div><!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -85,7 +93,7 @@
                                 </tbody>
                             </table>
                         </div><!-- /.table-responsive -->
-                        <?php require_once ADMIN_PATH . DS . 'includes' . DS . 'paginate_code.php'; ?>
+                        <?php //require_once ADMIN_PATH . DS . 'includes' . DS . 'paginate_code.php';?>
                     </div><!-- /.panel-body -->
                 </div><!-- /.panel -->
             </div><!-- /.col-lg-6 -->

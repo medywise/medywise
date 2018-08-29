@@ -1,6 +1,9 @@
 <?php
+    //TODO: write comments in this file
     // This is a helper class to make paginating
     // records easy.
+    // This class is not used till date, but added it here if you need in future!!
+    // You are not meant to understand this, or Do You?
     class Paginate
     {
         public $currentPage;
@@ -21,6 +24,7 @@
 
         public function previous()
         {
+            // It took me like two hours to come up with this formula...
             return $this->currentPage - 1;
         }
 
@@ -47,4 +51,4 @@
             //   in other words, page 2 starts with item 21
             return ($this->currentPage - 1) * $this->itemsPerPage;
         }
-    }
+    }//End of Class

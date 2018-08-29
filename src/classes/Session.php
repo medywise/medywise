@@ -1,21 +1,47 @@
 <?php
     // A class to help work with Sessions
+    // Abandon all hope, one who enter here.
+    // This file is gonna haunt you!!
+
     class Session
     {
         private $signedInAdmin = false;
         public $adminId;
         public $adminUsername;
+
         private $signedInUser = false;
         public $userId;
 
+        public $message;
         public $count;
 
         public function __construct()
         {
+            ini_set('session.save_handler', 'files');
             session_start();
             $this->checkAdminLogin();
             $this->checkUserLogin();
             $this->visitorCount();
+            $this->checkMessage();
+        }
+
+        public function message($msg="")
+        {
+            if (!empty($msg)) {
+                $_SESSION['message'] = $msg;
+            } else {
+                return $this->message;
+            }
+        }
+
+        private function checkMessage()
+        {
+            if (isset($_SESSION['message'])) {
+                $this->message = $_SESSION['message'];
+                unset($_SESSION['message']);
+            } else {
+                $this->message = "";
+            }
         }
 
         public function visitorCount()
@@ -94,3 +120,4 @@
         }
     }
     $session = new Session();
+    $message = $session->message();

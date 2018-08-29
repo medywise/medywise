@@ -1,9 +1,9 @@
-<?php require_once("../initialize.php"); ?>
+<?php //require_once("../initialize.php");?>
 <?php require_once("includes/header.php"); ?>
 <?php require_once("includes/header_without_extra_css.php"); ?>
 <?php $user = new User(); ?>
 <?php if ($user->userLoggedIn()) {
-    $user->redirect("index.php");
+    $user->redirect("index");
 } ?>
 <div class="container text-center ">
 	<div class="row">

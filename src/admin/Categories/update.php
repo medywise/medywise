@@ -17,6 +17,7 @@
 
         if ($category) {
             $category->updateCategory($name, $description);
+            redirectTo("view.php");
         }
     }
 ?>

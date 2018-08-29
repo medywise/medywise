@@ -1,10 +1,10 @@
 <?php require_once("includes/header.php"); ?>
 <?php require_once("includes/header_without_extra_css.php"); ?>
-<?php require_once("includes/navigation.php"); ?>
+// <?php //require_once("includes/navigation.php"); ?>
 <?php
-    if (!$user->userLoggedIn()) {
-        $user->redirect("index.php");
-    }
+    // if (!$user->userLoggedIn()) {
+    //     $user->redirect("index");
+    // }
 ?>
 <div class="container text-center">
 	<div class="top-header">
