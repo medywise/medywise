@@ -13,20 +13,22 @@
     }
 
     if (!$accessToken) {
-        header("Location: ../../public/login.php");
+        header("Location: /login");
         exit();
     }
 
     $oAuth2Client = $fb->getOAuth2Client();
-    if (!$accessToken->isLongLived()) {
-        $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+  
+    $response = $fb->get("/me?fields=id, gender,first_name, last_name, email, birthday, location, picture.type(large)", $accessToken);
+    $userData = $response->getGraphNode()->asArray();
+ 
+    $obj = new User();
+    $result = $obj->registerUserFB($userData['first_name'], $userData['last_name'],$userData['first_name'].'_'.$userData['id'], $userData['email'],$userData['email'].'_'.$userData['id']);
 
-        $response = $fb->get("/me?fields=id, first_name, last_name, email, birthday, location, picture.type(large)", $accessToken);
-        $userData = $response->getGraphNode()->asArray();
-        //echo "<pre>";
-        //var_dump($userData);
-        $_SESSION['userData'] = $userData;
-        $_SESSION['access_token'] = (string) $accessToken;
-        header("Location: ../../public/index.php");
-        exit();
+    if($result == 'exists'){
+        $_SESSION['email'] = $userData['email'];
+        $_SESSION['givenName'] = $userData['first_name'].'_'.$userData['id'];
     }
+
+    header("Location: /login");
+    exit();

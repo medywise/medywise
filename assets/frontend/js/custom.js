@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
-
-	$(".scrh").autocomplete({
+	new ClipboardJS('.copyme');
+ 	$(".scrh").autocomplete({
 		minLength: 3,
 		autoFocus: true,
 		source: function (request, response) {

@@ -546,7 +546,6 @@ class User extends Main
         $date1 = date_create($result->register_date);
         $date2 = date_create(date("Y-m-d"));
         $days = date_diff($date1, $date2)->days;
-        // print_r($days);
         if ($days > 21) { // 21 days check
             if (!$result->subscription_status && !$result->tranxid) {
                 echo "<h1 class='bg-danger'>It seems like your trial period has expired!!</h1/>";
