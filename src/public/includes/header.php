@@ -34,4 +34,6 @@
 		<script src="../../assets/frontend/js/loadingoverlay.min.js"></script>
 		<script src="../../assets/frontend/js/jquery-ui.js"></script>
 	  	<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+        <script src="../../assets/frontend/js/clipboard.js"></script>
+
 		<script src="../../assets/frontend/js/custom.js"></script>

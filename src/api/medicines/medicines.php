@@ -7,8 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         global $database;
 
         $med_id = $database->escape($_GET['med_id']);
-        $q = "SELECT m.name,m.description,m.ratings,m.clicks,m.company_id,m.cat_id,m.price,m.type,m.used_for,m.also_called,m.available_as,m.how_to_store,m.how_to_take,m.side_effects,m.when_to_take,c.name as company_name FROM medicines as m LEFT JOIN company as c on m.company_id = c.id WHERE m.id = '".$med_id."'";
- 
+        $q = "SELECT m.name,m.description,m.ratings,m.clicks,m.company_id,m.category_id,m.price,m.type,m.used_for,m.also_called,m.available_as,m.how_to_store,m.how_to_take,m.side_effects,m.when_to_take,c.name as company_name FROM medicines as m LEFT JOIN company as c on m.company_id = c.id WHERE m.id = '".$med_id."'";
+ echo $q;
         $result = $database->query($q);
 
         if ($result->num_rows) {

@@ -1,4 +1,8 @@
 <?php
+if (!session_id()) {
+    session_start();
+}
+print_r($_SESSION);
 	$pageTitle = "Login";
 	$pageTitle2 = "Login here to access Medywise";
 	$keywords = "Medywise, login";

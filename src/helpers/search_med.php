@@ -15,7 +15,7 @@
 	    } 
  
         $result = $database->query($q);
-        $result_ = $result;
+        // $result_ = $result;
         
         if ($result->num_rows) {
             echo '<div class="box">   
@@ -35,14 +35,20 @@
 
                 echo '<div class="hidden show_later"><div class="grid-full">';
                     while($row_ = $result_->fetch_object()){
-                        // print_r($row_);
-                        echo '<div class="full-inner">
+                        
+                        $str = $row->mname.'<br>'.$row->mdesc;
+
+                        echo '<div id="copy" class="full-inner">
                                     <h1>'.$row_->mname.'</h1>
                                     <p>'.$row_->mdesc.'</p>
                                 </div>';
                     }
+
+
+                   
+                   
                 echo '<div class="new-btn">
-                    <a href="#" class="btn btn-primary">Copy Text</a>
+                    <a href="#" class="btn copyme btn-primary" data-clipboard-target="#copy">Copy Text</a>
                  <a href="whatsapp://send?text='.$name.' – '.urlencode("http://dev-medical-web.pantheonsite.io/search?med=asd").'" data-action="share/whatsapp/share" class="btn btn-primary"> Share</a>
                 </div></div></div>';
 

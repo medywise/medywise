@@ -11,13 +11,15 @@
                 echo '<div class="grid-full">';
                  while($row = $result->fetch_object()){
                  	$name = $row->name;
-                     echo '<div class="full-inner">
+
+                        $str = $row->name.'<br>'.$row->description;
+                     echo '<div id="copy" class="full-inner">
                                  <h1>'.$row->name.'</h1>
                                  <p>'.$row->description.'</p>
                              </div>';
                  }
              echo '<div class="new-btn">
-                 <a href="#" class="btn btn-primary">Copy Text</a>
+                    <a href="#" class="btn copyme btn-primary" data-clipboard-target="#copy">Copy Text</a>
                  <a href="whatsapp://send?text='.$name.' – '.urlencode("http://dev-medical-web.pantheonsite.io/search?med=asd").'" data-action="share/whatsapp/share" class="btn btn-primary"> Share</a>
                 </div></div>';
  
